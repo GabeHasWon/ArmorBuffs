@@ -1,0 +1,46 @@
+Sets: {
+	Copper: +3 flat damage
+	Tin: +5 flat armor penetration
+	Iron: +15% increased melee weapon size
+	Lead:
+		'''
+		Knockback immunity
+		10% reduced movement speed
+		'''
+	Silver: +1 life regen/second
+	Tungsten: 33% increased global knockback
+	Gold: All drops have a 50% to roll twice
+	Snow: 50% chance for any attack to inflict Frostburn
+	Archaeologist: Permanent Spelunker and Dangersense potions
+	Ninja: 10% chance to dodge any attack
+	Rune: 25% magic critical strike chance
+	RoyalJelly: 15% chance for attacks to apply Oiled, which increases the damage of burning debuffs
+	AshPants: 100% chance to apply On Fire! to anything hit for 6 seconds
+	RuneHat: +15% magic damage
+	RuneRobe:
+		'''
+		+120 max mana
+		20% reduced mana cost
+		'''
+	VikingHelmet: 10% reduced movement speed
+	MagicHat: +10% magic critical strike chance
+	DiamondRobe:
+		'''
+		15% magic critical strike chance
+		+100 max mana
+		'''
+	Necro:
+		'''
+		15% increased bullet velocity
+		Delay death by 7 seconds, after which you will be returned to ash
+		'''
+
+	NecroDeath: {
+		0: Death caught back up to {0}.
+		1: "{0} couldn't run away forever."
+		2: Time beat {0}.
+	}
+
+	Fossil: 75% chance to not consume ammo
+	WizardHat: 15% increased magic damage
+}

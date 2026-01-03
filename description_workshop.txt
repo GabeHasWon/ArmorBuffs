@@ -1,0 +1,71 @@
+--- Armor Buffs ---
+by GabeHasWon
+commissioned by HeavyDutyDerby
+
+This mod adds in a TON of minor edits to make most armors in prehardmode feel more interesting, alongside some vanities.
+
+---
+
+All changes are to set bonuses, unless specified:
+
+Copper armor: 
++3 flat damage
+
+Tin armor: 
++5 armour penetration
+
+Iron armor: 
+15% increased melee size
+
+Lead armor: 
+Knockback immunity, 10% slower movement speed
+
+Silver armor: 
++1 flat health regeneration/second
+
+Tungsten armor: 
++33% weapon knockback
+
+Gold armor: 
+50% for all drops to drop twice
+
+Ashwood Pants (single item): 
+All attacks inflict "On Fire" for 6 seconds
+
+(Pink) Snow Armor: 
+50% chance for all attacks to inflict "Frostburn" for 3 seconds
+
+Archaeologist's vanity set: 
+Permanent dangersense & spelunker potion effects, no longer vanity
+
+Ninja and Crystal Assassin armor: 
++10% chance to dodge any attacks
+
+Viking Helmet (single item): 
+4 -> 12 defense, 10% slower movement speed
+
+Necro armor: 
++35% bullet velocity, and after death, survive an additional seven seconds, then die
+
+Wizard Hat (single item): 
+5% -> 15% magic damage
+
+Magic hat (single item): 
++10% magic crit chance
+
+Diamond Robe (single item): 
++15% magic crit chance, max mana 80 -> 100, requires 70 bones to craft
+
+Rune Hat (single item): 
++7 defense, +15% increased magic damage (set bonus with Rune Robe/ no pants needed: +25% magic crit chance), no longer vanity
+
+Rune Robe (single item): 
++4 defence, increase maximum mana by 120, 20% reduced mana cost, no longer vanity
+
+Rune Hat + Rune Robe set bonus: 
++25% magic crit chance
+
+Royal Gel (single item): 
+Any attack has a 15% chance to inflict the "Oiled" debuff for 4 seconds
+
+Oiled now works on players as well.

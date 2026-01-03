@@ -1,0 +1,3 @@
+displayName = Armor Buffs
+author = GabeHasWon
+version = 1.0
