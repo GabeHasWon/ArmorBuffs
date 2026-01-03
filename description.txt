@@ -4,6 +4,8 @@ commissioned by HeavyDutyDerby
 
 This mod adds in a TON of minor edits to make most armors in prehardmode feel more interesting, alongside some vanities.
 
+GitHub: https://github.com/GabeHasWon/ArmorBuffs
+
 ---
 
 All changes are to set bonuses, unless specified:
