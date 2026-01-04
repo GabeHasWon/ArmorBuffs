@@ -5,13 +5,13 @@ Sets: {
 	Lead:
 		'''
 		Knockback immunity
-		10% reduced movement speed
+		15% reduced movement speed
 		'''
 	Silver: +1 life regen/second
 	Tungsten: 33% increased global knockback
 	Gold: All drops have a 50% to roll twice
 	Snow: 50% chance for any attack to inflict Frostburn
-	Archaeologist: Permanent Spelunker and Dangersense potions
+	Archaeologist: Permanent Hunter and Dangersense potions
 	Ninja: 10% chance to dodge any attack
 	Rune: 25% magic critical strike chance
 	RoyalJelly: 15% chance for attacks to apply Oiled, which increases the damage of burning debuffs
@@ -22,7 +22,7 @@ Sets: {
 		+120 max mana
 		20% reduced mana cost
 		'''
-	VikingHelmet: 10% reduced movement speed
+	VikingHelmet: 15% reduced movement speed
 	MagicHat: +10% magic critical strike chance
 	DiamondRobe:
 		'''

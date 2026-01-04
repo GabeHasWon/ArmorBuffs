@@ -4,6 +4,8 @@ commissioned by HeavyDutyDerby
 
 This mod adds in a TON of minor edits to make most armors in prehardmode feel more interesting, alongside some vanities.
 
+GitHub: https://github.com/GabeHasWon/ArmorBuffs
+
 ---
 
 All changes are to set bonuses, unless specified:
@@ -36,7 +38,7 @@ All attacks inflict "On Fire" for 6 seconds
 50% chance for all attacks to inflict "Frostburn" for 3 seconds
 
 Archaeologist's vanity set: 
-Permanent dangersense & spelunker potion effects, no longer vanity
+Permanent dangersense & hunter potion effects, no longer vanity
 
 Ninja and Crystal Assassin armor: 
 +10% chance to dodge any attacks

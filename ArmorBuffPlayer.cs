@@ -11,12 +11,13 @@ public class ArmorBuffPlayer : ModPlayer
     internal string Set = "";
     internal bool AshPants = false;
     internal bool RoyalSlime = false;
+    internal bool VikingHelmet = false;
     internal ushort? NecroDeathTime = null;
 
     public override void ResetEffects()
     {
         Set = "";
-        AshPants = RoyalSlime = false;
+        AshPants = RoyalSlime = VikingHelmet = false;
 
         if (NecroDeathTime.HasValue)
         {
@@ -65,7 +66,10 @@ public class ArmorBuffPlayer : ModPlayer
     public override bool FreeDodge(Player.HurtInfo info)
     {
         if (Set == ArmorBuffItem.AnyNinja)
+        {
+            Player.SetImmuneTimeForAllTypes(30);
             return Main.rand.NextFloat() < 0.1f;
+        }
 
         if (Set == ArmorBuffItem.Necro && NecroDeathTime is > 0)
             return true;
@@ -95,4 +99,16 @@ public class ArmorBuffPlayer : ModPlayer
     }
 
     public override bool CanConsumeAmmo(Item weapon, Item ammo) => Set != ArmorBuffItem.Fossil || Main.rand.NextBool();
+
+    public override void PostUpdateRunSpeeds()
+    {
+        if (Set == ArmorBuffItem.Lead || VikingHelmet)
+        {
+            const float Debuff = 0.85f;
+
+            Player.accRunSpeed *= Debuff;
+            Player.maxRunSpeed *= Debuff;
+            Player.runAcceleration *= Debuff;
+        }
+    }
 }

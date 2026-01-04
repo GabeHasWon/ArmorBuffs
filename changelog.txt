@@ -1,0 +1,7 @@
+1.0.0.1
+- Fixed some tooltips erroneously appearing after "Set Bonus:"
+- Fixed critical strike chance boosts being 1/100th of what they should be
+- Fixed dodges not applying i-frames
+- Fixed Archaeologist granting Spelunker instead of Hunter
+- Fixed movement debuffs on Lead set and Viking Helmet not working properly, spawning Hermes run effects
+- Fixed Royal Gel not working

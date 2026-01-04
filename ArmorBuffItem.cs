@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -164,7 +165,6 @@ public class ArmorBuffItem : GlobalItem
 
             case Lead:
                 player.noKnockback = true;
-                player.moveSpeed *= 0.9f;
                 break;
 
             case Tungsten:
@@ -172,12 +172,12 @@ public class ArmorBuffItem : GlobalItem
                 break;
 
             case Archaeologist:
-                player.AddBuff(BuffID.Spelunker, 2);
+                player.AddBuff(BuffID.Hunter, 2);
                 player.AddBuff(BuffID.Dangersense, 2);
                 break;
 
             case Rune:
-                player.GetCritChance(DamageClass.Magic) += 0.25f;
+                player.GetCritChance(DamageClass.Magic) += 25f;
                 break;
 
             default:
@@ -190,11 +190,11 @@ public class ArmorBuffItem : GlobalItem
         if (item.type == ItemID.AshWoodGreaves)
             player.GetModPlayer<ArmorBuffPlayer>().AshPants = true;
         else if (item.type == ItemID.VikingHelmet)
-            player.moveSpeed *= 0.9f;
+            player.GetModPlayer<ArmorBuffPlayer>().VikingHelmet = true;
         else if (item.type == ItemID.WizardHat)
             player.GetDamage(DamageClass.Magic) += 0.1f;
         else if (item.type == ItemID.MagicHat)
-            player.GetCritChance(DamageClass.Magic) += 0.1f;
+            player.GetCritChance(DamageClass.Magic) += 10f;
         else if (item.type == ItemID.RuneHat)
             player.GetDamage(DamageClass.Magic) += 0.15f;
         else if (item.type == ItemID.RuneRobe)
@@ -204,9 +204,11 @@ public class ArmorBuffItem : GlobalItem
         }
         else if (item.type == ItemID.DiamondRobe)
         {
-            player.GetCritChance(DamageClass.Magic) += 0.15f;
+            player.GetCritChance(DamageClass.Magic) += 15f;
             player.statManaMax2 += 20;
         }
+        else if (item.type == ItemID.RoyalGel)
+            player.GetModPlayer<ArmorBuffPlayer>().RoyalSlime = true;
     }
 
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -217,6 +219,7 @@ public class ArmorBuffItem : GlobalItem
         AddTip(ItemID.RuneHat, "RuneHat");
         AddTip(ItemID.DiamondRobe, "DiamondRobe");
         AddTip(ItemID.WizardHat, "WizardHat");
+        AddTip(ItemID.VikingHelmet, "VikingHelmet");
 
         if (item.type == ItemID.DiamondRobe && tooltips.Find(x => x.Name == "Tooltip0") is { } removeLine)
             tooltips.Remove(removeLine);
@@ -226,7 +229,14 @@ public class ArmorBuffItem : GlobalItem
         void AddTip(int id, string name)
         {
             if (item.type == id)
-                tooltips.Add(new(Mod, name + "Bonus", AutoloadedTips[name].Value));
+            {
+                int index = tooltips.Count - 1;
+
+                if (tooltips.FindIndex(x => x.Name == "SetBonus") is { } value and not -1)
+                    index = value - 1;
+
+                tooltips.Insert(index, new(Mod, name + "Bonus", AutoloadedTips[name].Value));
+            }
         }
     }
 
