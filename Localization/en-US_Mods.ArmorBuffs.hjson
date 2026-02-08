@@ -7,11 +7,15 @@ Sets: {
 		Knockback immunity
 		15% reduced movement speed
 		'''
-	Silver: +1 life regen/second
-	Tungsten: 33% increased global knockback
+	Silver: +50% jump speed
+	Tungsten:
+		'''
+		70% increased global knockback
+		+25% flight time
+		'''
 	Gold: All drops have a 50% to roll twice
 	Snow: 50% chance for any attack to inflict Frostburn
-	Archaeologist: Permanent Hunter and Dangersense potions
+	Archaeologist: All attacks inflict Cursed Flames for 3 seconds
 	Ninja: 10% chance to dodge any attack
 	Rune: 25% magic critical strike chance
 	RoyalJelly: 15% chance for attacks to apply Oiled, which increases the damage of burning debuffs
@@ -22,11 +26,15 @@ Sets: {
 		+120 max mana
 		20% reduced mana cost
 		'''
-	VikingHelmet: 15% reduced movement speed
+	VikingHelmet:
+		'''
+		15% reduced movement speed
+		13% damage reduction
+		'''
 	MagicHat: +10% magic critical strike chance
 	DiamondRobe:
 		'''
-		15% magic critical strike chance
+		15% increased magic damage
 		+100 max mana
 		'''
 	Necro:
@@ -43,4 +51,5 @@ Sets: {
 
 	Fossil: 75% chance to not consume ammo
 	WizardHat: 15% increased magic damage
+	Crimson: Mods.ArmorBuffs.Sets.Crimson
 }

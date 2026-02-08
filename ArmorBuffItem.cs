@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -51,6 +50,7 @@ public class ArmorBuffItem : GlobalItem
     public const string Rune = "Rune";
     public const string Necro = "Necro";
     public const string Fossil = "Fossil";
+    public const string Crimson = "Crimson";
 
     internal readonly static Dictionary<string, LocalizedText> AutoloadedTips = [];
 
@@ -71,6 +71,7 @@ public class ArmorBuffItem : GlobalItem
         AddTip(Rune);
         AddTip(Necro);
         AddTip(Fossil);
+        AddTip(Crimson);
 
         AddTip("RoyalJelly");
         AddTip("AshPants");
@@ -91,7 +92,7 @@ public class ArmorBuffItem : GlobalItem
     public override void SetDefaults(Item item)
     {
         if (item.type == ItemID.VikingHelmet)
-            item.defense = 12;
+            item.defense = 4;
         else if (item.type == ItemID.RuneHat)
             item.defense = 7;
         else if (item.type == ItemID.RuneRobe)
@@ -129,6 +130,8 @@ public class ArmorBuffItem : GlobalItem
             return Necro;
         else if (IsSet(ItemID.FossilHelm, ItemID.FossilShirt, ItemID.FossilPants))
             return Fossil;
+        else if (IsSet(ItemID.CrimsonHelmet, ItemID.CrimsonScalemail, ItemID.CrimsonGreaves))
+            return Crimson;
 
         return string.Empty;
 
@@ -160,24 +163,27 @@ public class ArmorBuffItem : GlobalItem
                 break;
 
             case Tin:
-                player.GetArmorPenetration(DamageClass.Generic) += 3;
+                player.GetArmorPenetration(DamageClass.Generic) += 10;
                 break;
 
             case Lead:
                 player.noKnockback = true;
                 break;
 
-            case Tungsten:
-                player.GetKnockback(DamageClass.Generic) += 0.33f;
+            case Silver:
+                Player.jumpSpeed *= 1.5f;
                 break;
 
-            case Archaeologist:
-                player.AddBuff(BuffID.Hunter, 2);
-                player.AddBuff(BuffID.Dangersense, 2);
+            case Tungsten:
+                player.GetKnockback(DamageClass.Generic) += 0.7f;
                 break;
 
             case Rune:
                 player.GetCritChance(DamageClass.Magic) += 25f;
+                break;
+
+            case Fossil:
+                player.GetDamage(DamageClass.Ranged).Flat += 8;
                 break;
 
             default:
@@ -190,7 +196,10 @@ public class ArmorBuffItem : GlobalItem
         if (item.type == ItemID.AshWoodGreaves)
             player.GetModPlayer<ArmorBuffPlayer>().AshPants = true;
         else if (item.type == ItemID.VikingHelmet)
+        {
             player.GetModPlayer<ArmorBuffPlayer>().VikingHelmet = true;
+            player.endurance += 0.13f;
+        }
         else if (item.type == ItemID.WizardHat)
             player.GetDamage(DamageClass.Magic) += 0.1f;
         else if (item.type == ItemID.MagicHat)
@@ -204,11 +213,24 @@ public class ArmorBuffItem : GlobalItem
         }
         else if (item.type == ItemID.DiamondRobe)
         {
-            player.GetCritChance(DamageClass.Magic) += 15f;
+            player.GetDamage(DamageClass.Magic) += 0.15f;
             player.statManaMax2 += 20;
         }
         else if (item.type == ItemID.RoyalGel)
             player.GetModPlayer<ArmorBuffPlayer>().RoyalSlime = true;
+
+        if (item.prefix == PrefixID.Lucky)
+            player.luck += 0.1f;
+        else if (item.prefix is PrefixID.Brisk or PrefixID.Fleeting or PrefixID.Hasty or PrefixID.Quick)
+        {
+            Player.jumpSpeed *= item.prefix switch
+            {
+                PrefixID.Brisk => 1.05f,
+                PrefixID.Fleeting => 1.07f,
+                PrefixID.Hasty => 1.10f,
+                _ => 1.15f,
+            };
+        }
     }
 
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -243,6 +265,6 @@ public class ArmorBuffItem : GlobalItem
     public override void ModifyItemScale(Item item, Player player, ref float scale)
     {
         if (player.GetModPlayer<ArmorBuffPlayer>().Set == Iron)
-            scale *= 1.15f;
+            scale *= 1.25f;
     }
 }

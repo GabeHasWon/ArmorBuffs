@@ -8,14 +8,35 @@ namespace ArmorBuffs;
 
 public class ArmorBuffPlayer : ModPlayer
 {
+    public string OldSet { get; private set; }
+
     internal string Set = "";
     internal bool AshPants = false;
     internal bool RoyalSlime = false;
     internal bool VikingHelmet = false;
     internal ushort? NecroDeathTime = null;
 
+    public override void Load() => On_Player.DoubleJumpVisuals += AddWingTime;
+
+    private void AddWingTime(On_Player.orig_DoubleJumpVisuals orig, Player self)
+    {
+        orig(self);
+
+        if (self.GetModPlayer<ArmorBuffPlayer>().OldSet == ArmorBuffItem.Tungsten)
+            self.wingTimeMax = (int)(self.wingTimeMax * 1.25f);
+    }
+
     public override void ResetEffects()
     {
+        Player.rocketTimeMax = 7; // Vanilla default, awkward but there's no hooks for it
+
+        if (Set == ArmorBuffItem.Tungsten)
+        {
+            if (Player.wingTimeMax <= 0)
+                Player.rocketTimeMax = (int)(Player.rocketTimeMax * 1.25f);
+        }
+
+        OldSet = Set;
         Set = "";
         AshPants = RoyalSlime = VikingHelmet = false;
 
@@ -42,16 +63,18 @@ public class ArmorBuffPlayer : ModPlayer
 
     public override void UpdateLifeRegen()
     {
-        if (Set == ArmorBuffItem.Silver)
-            Player.lifeRegen += 2;
+        if (Set == ArmorBuffItem.Crimson)
+            Player.lifeRegen += 4;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         if (AshPants)
             target.AddBuff(BuffID.OnFire, 6 * 60);
-        else if (Set == ArmorBuffItem.SnowSet && Main.rand.NextBool(3))
-            target.AddBuff(BuffID.Frostburn, 3 * 60);
+        else if (Set == ArmorBuffItem.SnowSet)
+            target.AddBuff(BuffID.Frostburn, 7 * 60);
+        else if (Set == ArmorBuffItem.Archaeologist)
+            target.AddBuff(BuffID.Cursed, 3 * 60);
 
         if (RoyalSlime && Main.rand.NextFloat() <= 0.15f)
             target.AddBuff(BuffID.Oiled, 4 * 60);
