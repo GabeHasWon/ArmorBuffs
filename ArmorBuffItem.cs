@@ -1,10 +1,13 @@
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace ArmorBuffs;
 
@@ -50,7 +53,10 @@ public class ArmorBuffItem : GlobalItem
     public const string Rune = "Rune";
     public const string Necro = "Necro";
     public const string Fossil = "Fossil";
-    public const string Crimson = "Crimson";
+    public const string Crimson = "Crimson"; 
+    public const string Meteorite = "Meteorite"; 
+
+    public const float LuckyBoost = 0.05f;
 
     internal readonly static Dictionary<string, LocalizedText> AutoloadedTips = [];
 
@@ -72,6 +78,7 @@ public class ArmorBuffItem : GlobalItem
         AddTip(Necro);
         AddTip(Fossil);
         AddTip(Crimson);
+        AddTip(Meteorite);
 
         AddTip("RoyalJelly");
         AddTip("AshPants");
@@ -86,6 +93,9 @@ public class ArmorBuffItem : GlobalItem
         AddTip("NecroDeath.1");
         AddTip("NecroDeath.2");
 
+        AddTip("BoostedJumpHeight");
+        AddTip("BoostedLuck");
+
         static void AddTip(string name) => AutoloadedTips.Add(name, Language.GetOrRegister("Mods.ArmorBuffs.Sets." + name));
     }
 
@@ -97,7 +107,12 @@ public class ArmorBuffItem : GlobalItem
             item.defense = 7;
         else if (item.type == ItemID.RuneRobe)
             item.defense = 4;
-        
+        else if (item.type == ItemID.SpaceGun)
+        {
+            item.damage = (int)(item.damage * 1.5f);
+            item.mana *= 2;
+        }
+
         if (item.type is ItemID.RuneHat or ItemID.RuneRobe or ItemID.ArchaeologistsHat or ItemID.ArchaeologistsJacket or ItemID.ArchaeologistsPants)
             item.vanity = false;
     }
@@ -132,6 +147,8 @@ public class ArmorBuffItem : GlobalItem
             return Fossil;
         else if (IsSet(ItemID.CrimsonHelmet, ItemID.CrimsonScalemail, ItemID.CrimsonGreaves))
             return Crimson;
+        else if (IsSet(ItemID.MeteorHelmet, ItemID.MeteorSuit, ItemID.MeteorLeggings))
+            return Meteorite;
 
         return string.Empty;
 
@@ -183,7 +200,11 @@ public class ArmorBuffItem : GlobalItem
                 break;
 
             case Fossil:
-                player.GetDamage(DamageClass.Ranged).Flat += 8;
+                player.GetDamage(DamageClass.Ranged).Flat += 3;
+                break;
+
+            case Archaeologist:
+                player.AddBuff(BuffID.Hunter, 2);
                 break;
 
             default:
@@ -220,18 +241,19 @@ public class ArmorBuffItem : GlobalItem
             player.GetModPlayer<ArmorBuffPlayer>().RoyalSlime = true;
 
         if (item.prefix == PrefixID.Lucky)
-            player.luck += 0.1f;
+            player.luck += LuckyBoost;
         else if (item.prefix is PrefixID.Brisk or PrefixID.Fleeting or PrefixID.Hasty or PrefixID.Quick)
-        {
-            Player.jumpSpeed *= item.prefix switch
-            {
-                PrefixID.Brisk => 1.05f,
-                PrefixID.Fleeting => 1.07f,
-                PrefixID.Hasty => 1.10f,
-                _ => 1.15f,
-            };
-        }
+            Player.jumpSpeed *= GetPrefixJumpHeightBoost(item);
     }
+
+    private static float GetPrefixJumpHeightBoost(Item item) => item.prefix switch
+    {
+        PrefixID.Brisk => 1.05f,
+        PrefixID.Fleeting => 1.07f,
+        PrefixID.Hasty2 => 1.10f,
+        PrefixID.Quick2 => 1.15f,
+        _ => 0,
+    };
 
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
     {
@@ -242,6 +264,18 @@ public class ArmorBuffItem : GlobalItem
         AddTip(ItemID.DiamondRobe, "DiamondRobe");
         AddTip(ItemID.WizardHat, "WizardHat");
         AddTip(ItemID.VikingHelmet, "VikingHelmet");
+
+        // Adapted from vanilla's rarity color
+        Color goodColor = new(120, 190, 120, 255);
+
+        if (GetPrefixJumpHeightBoost(item) is not 0 and { } boost && tooltips.FindIndex(x => x.Name == "PrefixAccMoveSpeed") is not -1 and int prefixAcc)
+        {
+            string boostDisplay = ((boost - 1) * 100f).ToString("#0.#");
+            tooltips.Insert(prefixAcc + 1, new(Mod, "PrefixAccMoveSpeed1", AutoloadedTips["BoostedJumpHeight"].Format(boostDisplay)) { OverrideColor = goodColor });
+        }
+
+        if (item.prefix == PrefixID.Lucky && tooltips.FindIndex(x => x.Name == "PrefixAccCritChance") is not -1 and int prefixCrit)
+            tooltips.Insert(prefixCrit + 1, new(Mod, "PrefixAccMoveSpeed1", AutoloadedTips["BoostedLuck"].Format(LuckyBoost)) { OverrideColor = goodColor });
 
         if (item.type == ItemID.DiamondRobe && tooltips.Find(x => x.Name == "Tooltip0") is { } removeLine)
             tooltips.Remove(removeLine);

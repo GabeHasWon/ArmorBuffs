@@ -14,8 +14,12 @@ Sets: {
 		+25% flight time
 		'''
 	Gold: All drops have a 50% to roll twice
-	Snow: 50% chance for any attack to inflict Frostburn
-	Archaeologist: All attacks inflict Cursed Flames for 3 seconds
+	Snow: All attacks deal Frostburn for 7 seconds
+	Archaeologist:
+		'''
+		All attacks inflict Cursed Flames for 3 seconds
+		Gain a constant Hunter potion
+		'''
 	Ninja: 10% chance to dodge any attack
 	Rune: 25% magic critical strike chance
 	RoyalJelly: 15% chance for attacks to apply Oiled, which increases the damage of burning debuffs
@@ -49,7 +53,14 @@ Sets: {
 		2: Time beat {0}.
 	}
 
-	Fossil: 75% chance to not consume ammo
+	Fossil:
+		'''
+		75% chance to not consume ammo
+		+8 flat ranged damage
+		'''
 	WizardHat: 15% increased magic damage
-	Crimson: Mods.ArmorBuffs.Sets.Crimson
+	Crimson: +2 life regen/second
+	BoostedJumpHeight: +{0}% increased jump height
+	BoostedLuck: +{0} increased luck
+	Meteorite: Mods.ArmorBuffs.Sets.Meteorite
 }

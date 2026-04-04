@@ -1,11 +1,7 @@
-1.1
-- Buffed Tin, Iron, Snow, Tungsten armor
-- Gave Tungsten armor +25% flight time
-- Replaced Silver set bonus with +50% jump height (from +1 flat health regen per second)
-- Replaced Archeologist's set bonus with a 100% chance to inflict Cursed Flames, always
-- Reduced Viking Helmet's defense from 12 to 4, added 13% damage resist
-- Replaced Diamond Robe's 15% magic crit increase with the same for magic damage
-- Reduced all tier 3 prehardmode ores (Copper, Tin, Iron, Lead, Silver, Tungsten) bar requirements for the armor by 50%, rounded down
-- Lucky equipment now grants +0.1 luck
-- Players can crit other players in PvP now, should be similar functionality to vanilla NPC crits
-- The movmeent buff reforges now also buff jump height (5%, 7%, 10%, 15% for Brisk, Fleeting, Hasty, Quick in that order)
+1.1.0.1
+- Fixed missing/invalid localization
+- Added reforge localization
+- Added Hunter potion effect back to Archaelogist set
+- Nerfed Luck gain from Lucky equipment from +0.1 to +0.05
+- Replaced Space Gun functionality with 50% increased damage, doubled mana cost
+- Fixed Quick/Hasty not getting the proper buffs

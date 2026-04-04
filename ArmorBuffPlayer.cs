@@ -16,7 +16,15 @@ public class ArmorBuffPlayer : ModPlayer
     internal bool VikingHelmet = false;
     internal ushort? NecroDeathTime = null;
 
-    public override void Load() => On_Player.DoubleJumpVisuals += AddWingTime;
+    public override void Load()
+    {
+        On_Player.DoubleJumpVisuals += AddWingTime;
+
+        Main.pvpBuff[BuffID.Oiled] = true;
+        Main.pvpBuff[BuffID.Electrified] = true;
+        Main.pvpBuff[BuffID.CursedInferno] = true;
+        Main.pvpBuff[BuffID.Frostburn] = true;
+    }
 
     private void AddWingTime(On_Player.orig_DoubleJumpVisuals orig, Player self)
     {
@@ -61,6 +69,12 @@ public class ArmorBuffPlayer : ModPlayer
         }
     }
 
+    public override void OnHurt(Player.HurtInfo info)
+    {
+        if (info.DamageSource.SourceProjectileType is { } w && w == ProjectileID.GreenLaser)
+            Player.AddBuff(BuffID.Electrified, 3 * 60, false);
+    }
+
     public override void UpdateLifeRegen()
     {
         if (Set == ArmorBuffItem.Crimson)
@@ -74,7 +88,7 @@ public class ArmorBuffPlayer : ModPlayer
         else if (Set == ArmorBuffItem.SnowSet)
             target.AddBuff(BuffID.Frostburn, 7 * 60);
         else if (Set == ArmorBuffItem.Archaeologist)
-            target.AddBuff(BuffID.Cursed, 3 * 60);
+            target.AddBuff(BuffID.CursedInferno, 3 * 60);
 
         if (RoyalSlime && Main.rand.NextFloat() <= 0.15f)
             target.AddBuff(BuffID.Oiled, 4 * 60);
@@ -82,8 +96,19 @@ public class ArmorBuffPlayer : ModPlayer
 
     public override void OnHitAnything(float x, float y, Entity victim)
     {
-        if (victim is Player plr && RoyalSlime && Main.rand.NextFloat() <= 0.15f)
-            plr.AddBuff(BuffID.Oiled, 4 * 60);
+        if (victim is Player plr)
+        {
+            if (RoyalSlime)
+                plr.AddBuff(BuffID.Oiled, 3 * 60, false);
+
+            if (Set == ArmorBuffItem.Archaeologist)
+                plr.AddBuff(BuffID.CursedInferno, 4 * 60, false);
+            else if (Set == ArmorBuffItem.SnowSet)
+                plr.AddBuff(BuffID.Frostburn, 7 * 60, false);
+
+            if (AshPants)
+                plr.AddBuff(BuffID.OnFire, 6 * 60);
+        }
     }
 
     public override bool FreeDodge(Player.HurtInfo info)

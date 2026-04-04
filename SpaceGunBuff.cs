@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace ArmorBuffs;
 
+[Autoload(false)]
 internal class SpaceGunBuff : GlobalProjectile
 {
     internal class ElectrifiedFunctionalityForNPCs : GlobalNPC
@@ -27,25 +30,29 @@ internal class SpaceGunBuff : GlobalProjectile
 
     public override bool InstancePerEntity => true;
 
-    private bool _spaceGunAttack = false;
+    internal bool spaceGunAttack = false;
 
     public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) => entity.type == ProjectileID.GreenLaser;
 
     public override void OnSpawn(Projectile projectile, IEntitySource source)
     {
-        if (source is EntitySource_ItemUse_WithAmmo { Item: Item item } && item.type == ItemID.SpaceGun)
-            _spaceGunAttack = true;
+        if (source is EntitySource_ItemUse_WithAmmo { Item: Item item, Player: Player plr } && item.type == ItemID.SpaceGun 
+            && plr.GetModPlayer<ArmorBuffPlayer>().Set == ArmorBuffItem.Meteorite)
+            spaceGunAttack = true;
     }
 
     public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (_spaceGunAttack)
+        if (spaceGunAttack)
             target.AddBuff(BuffID.Electrified, 3 * 60);
     }
 
     public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)
     {
-        if (_spaceGunAttack)
-            target.AddBuff(BuffID.Electrified, 3 * 60);
+        if (spaceGunAttack)
+            target.AddBuff(BuffID.Electrified, 3 * 60, false);
     }
+
+    public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) => bitWriter.WriteBit(spaceGunAttack);
+    public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) => spaceGunAttack = bitReader.ReadBit();
 }
