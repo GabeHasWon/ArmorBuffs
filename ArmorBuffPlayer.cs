@@ -107,7 +107,7 @@ public class ArmorBuffPlayer : ModPlayer
                 plr.AddBuff(BuffID.Frostburn, 7 * 60, false);
 
             if (AshPants)
-                plr.AddBuff(BuffID.OnFire, 6 * 60);
+                plr.AddBuff(BuffID.OnFire, 6 * 60, false);
         }
     }
 

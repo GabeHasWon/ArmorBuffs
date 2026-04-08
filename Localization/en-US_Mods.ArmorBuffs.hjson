@@ -56,7 +56,7 @@ Sets: {
 	Fossil:
 		'''
 		75% chance to not consume ammo
-		+8 flat ranged damage
+		+3 flat ranged damage
 		'''
 	WizardHat: 15% increased magic damage
 	Crimson: +2 life regen/second

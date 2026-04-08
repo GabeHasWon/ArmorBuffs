@@ -78,7 +78,6 @@ public class ArmorBuffItem : GlobalItem
         AddTip(Necro);
         AddTip(Fossil);
         AddTip(Crimson);
-        AddTip(Meteorite);
 
         AddTip("RoyalJelly");
         AddTip("AshPants");
@@ -147,8 +146,6 @@ public class ArmorBuffItem : GlobalItem
             return Fossil;
         else if (IsSet(ItemID.CrimsonHelmet, ItemID.CrimsonScalemail, ItemID.CrimsonGreaves))
             return Crimson;
-        else if (IsSet(ItemID.MeteorHelmet, ItemID.MeteorSuit, ItemID.MeteorLeggings))
-            return Meteorite;
 
         return string.Empty;
 
@@ -242,7 +239,7 @@ public class ArmorBuffItem : GlobalItem
 
         if (item.prefix == PrefixID.Lucky)
             player.luck += LuckyBoost;
-        else if (item.prefix is PrefixID.Brisk or PrefixID.Fleeting or PrefixID.Hasty or PrefixID.Quick)
+        else if (item.prefix is PrefixID.Brisk or PrefixID.Fleeting or PrefixID.Hasty2 or PrefixID.Quick2)
             Player.jumpSpeed *= GetPrefixJumpHeightBoost(item);
     }
 
